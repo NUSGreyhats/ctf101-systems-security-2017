@@ -7,12 +7,13 @@ RUN apt-get install -y xinetd libc6-dev-i386
 RUN useradd -m $user
 RUN echo "$user     hard    nproc       20" >> /etc/security/limits.conf
 COPY ./goldrush /home/$user/
-COPY ./flag /home/$user/
+COPY ./flag.txt /home/$user/
+COPY ./flag.txt /
 COPY ./challservice /etc/xinetd.d/
 RUN chmod +x /home/$user/goldrush
 RUN chown -R root:$user /home/$user
 RUN chmod -R 750 /home/$user
-RUN chown root:$user /home/$user/flag
-RUN chmod 440 /home/$user/flag
+RUN chown root:$user /home/$user/flag.txt
+RUN chmod 440 /home/$user/flag.txt
 EXPOSE 31337
 CMD ["/usr/sbin/xinetd", "-d"]
